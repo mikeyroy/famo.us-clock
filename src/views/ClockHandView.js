@@ -1,9 +1,18 @@
+/**
+* ClockHandView.js
+* Creates individual clock hands. Customization is done in the constructor.
+* ex var hourHandView = new ClockHandView(5, 50, 5, 'blue');
+*/
 define(function(require, exports, module) {
 	var View = require('famous/core/View');
 	var Surface = require('famous/core/Surface');
 	var Transform = require('famous/core/Transform');
 	var StateModifier = require('famous/modifiers/StateModifier');
 
+	/**
+	* Initialization function
+	* Creates an individual clock hand
+	*/
 	function ClockHandView() {
 		View.apply(this, arguments);
 
@@ -19,7 +28,14 @@ define(function(require, exports, module) {
 		align: [0.5, 0.5]
 	};
 
-	function _createHand(pinDiameter, width, height, color) {
+	/**
+	* Creates a clock hand and places it in the UI
+	* @param pinDiameter {Integer} The diameter of the center ring under the clock's pin
+	* @param width {Integer} The width of the clock hand
+	* @param length {Integer} The length of the clock hand
+	* @param color {String} The color of the clock hand
+	*/
+	function _createHand(pinDiameter, width, length, color) {
 		var pinHole = new Surface({
 			properties: {
 				border: pinDiameter + 'px solid ' + color,
@@ -38,9 +54,9 @@ define(function(require, exports, module) {
 
 		var arm = new Surface({
 			properties: {
-				borderTop: height / 2 + 'px solid transparent',
-				borderBottom: height / 2 + 'px solid transparent',
-				borderLeft: width + 'px solid ' + color
+				borderTop: width + 'px solid ' + color,
+				borderRight: length / 2 + 'px solid transparent',
+				borderLeft: length / 2 + 'px solid transparent'
 			}
 		});
 
@@ -48,7 +64,7 @@ define(function(require, exports, module) {
 			size: [0, 0],
 			origin: this.options.origin,
 			align: this.options.align,
-			transform: Transform.translate(pinDiameter / 2, -height / 2, 0)
+			transform: Transform.translate(-length / 2, pinDiameter / 2, 0)
 		});
 
 		this.add(armModifier).add(arm);

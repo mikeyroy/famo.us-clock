@@ -1,9 +1,17 @@
+/**
+* ClockFaceView.js
+* Builds the clock border, tick marks, and center pin
+*/
 define(function(require, exports, module) {
 	var View = require('famous/core/View');
 	var Surface = require('famous/core/Surface');
     var Transform = require('famous/core/Transform');
 	var StateModifier = require('famous/modifiers/StateModifier');
 
+	/**
+	* Initialization function
+	* Generates the clock face UI
+	*/
 	function ClockFaceView() {
 		View.apply(this, arguments);
 
@@ -27,6 +35,9 @@ define(function(require, exports, module) {
 		pinDiameter: 2
 	};
 
+	/**
+	* Creates the clocks border
+	*/
 	function _clockBorder() {
 		var clockBorder = new Surface({
 			properties: {
@@ -41,12 +52,18 @@ define(function(require, exports, module) {
 		this.add(clockBorderModifier).add(clockBorder);
 	}
 
+	/**
+	* Generates the 60 clock ticks
+	*/
 	function _clockTicks() {
 		for (var i = 0; i < 60; i+= 1) {
 			_addClockTick.call(this, i);
 		}
 	}
 
+	/**
+	* Creates the clock tick and calculates the position it needs to be in on the clock face
+	*/
 	function _addClockTick(minute) {
 		var tick = new Surface({
 			properties: {
@@ -68,6 +85,9 @@ define(function(require, exports, module) {
 		this.add(rotateModifier).add(tickModifier).add(tick);
 	}
 
+	/**
+	* Generates the central pin and properly places it
+	*/
 	function _clockHandPin() {
 		var pin = new Surface({
 			properties: {
